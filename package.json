@@ -1,6 +1,6 @@
 {
   "name": "sav-decorator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Interface generator with ES7 decorator",
   "main": "dist/sav-decorator.cjs.js",
   "module": "dist/sav-decorator.es.js",
@@ -41,9 +41,6 @@
     "sav-util": "0.0.9",
     "standard": "^8.5.0",
     "watch-cli": "^0.2.1"
-  },
-  "dependencies": {
-    "path-to-regexp": "^1.7.0"
   },
   "standard": {
     "parser": "babel-eslint"
