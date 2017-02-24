@@ -21,15 +21,15 @@ import {refer} from './conf'
  * {
  *   name: 'Sale',
  *   options: {auth: true},
- *   actions:[
- *     {
+ *   actions:{
+ *     say: {
  *       name: 'say',
  *       action: Sale.prototype.say,
  *       options: [
  *         ['hello', 'world']
  *       ]
  *     }
- *   ]
+ *   }
  * }
  */
 export function gen (opts) {
@@ -48,16 +48,18 @@ function transform (opts) {
     for (let key in opts) {
       options[key] = opts[key]
     }
+    let actions = {}
+    for (let name in configs) {
+      actions[name] = { // action
+        name,
+        action: target.prototype[name],
+        options: configs[name]
+      }
+    }
     let ret = { // module
       name: target.name,
       options,
-      actions: Object.keys(configs).map(name => {
-        return { // action
-          name,
-          action: target.prototype[name],
-          options: configs[name]
-        }
-      })
+      actions
     }
     return ret
   }

@@ -47,15 +47,15 @@ test('interface+impl', (ava) => {
   expect(generator({auth: true})(Test)).to.deep.equal({
     name: 'Test',
     options: {auth: true},
-    actions: [
-      {
+    actions: {
+      test: {
         name: 'test',
         action: Test.prototype.test,
         options: [
           ['hello', 'world']
         ]
       }
-    ]
+    }
   })
 
   @gen
@@ -68,14 +68,14 @@ test('interface+impl', (ava) => {
   expect(Test2).to.deep.equal({
     name: 'Test2',
     options: {},
-    actions: [
-      {
+    actions: {
+      test: {
         name: 'test',
         action: undefined,
         options: [
           ['hello', 'world']
         ]
       }
-    ]
+    }
   })
 })
