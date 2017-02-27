@@ -2,7 +2,7 @@ import test from 'ava'
 import {isFunction} from 'sav-util'
 import {expect} from 'chai'
 
-import {conf, refer, quickConf, impl, annotateMethod, annotateClass, gen, generator} from '../'
+import {conf, refer, quickConf, impl, annotateMethod, annotateClass, gen, generator} from '../src'
 
 test('api', (ava) => {
   ava.true(isFunction(conf))
@@ -32,6 +32,28 @@ test('quickConf', (ava) => {
   }
   let props = refer(Test)
   expect(props).to.deep.equal({say: [[ 'prop', 'readonly' ]]})
+})
+
+test('multi conf', (ava) => {
+  let prop = quickConf('prop')
+  class Test {
+    @prop()
+    @prop
+    say () {}
+  }
+  let props = refer(Test)
+  expect(props).to.deep.equal({say: [['prop'], ['prop']]})
+})
+
+test('multi gen', (ava) => {
+  let prop = quickConf('prop')
+  @gen
+  class Test {
+    @prop()
+    @prop
+    say () {}
+  }
+  expect(Test.actions.say.options).to.deep.equal([['prop'], ['prop']])
 })
 
 test('interface+impl', (ava) => {
