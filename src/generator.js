@@ -45,9 +45,7 @@ function transform (opts) {
   return (target) => {
     let configs = refer(target)
     let options = refer(target, true)
-    for (let key in opts) {
-      options[key] = opts[key]
-    }
+    options = {...options, ...opts}
     let actions = {}
     for (let name in configs) {
       actions[name] = { // action

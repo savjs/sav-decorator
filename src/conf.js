@@ -37,11 +37,22 @@ export function quickConf (key) {
 }
 
 /**
+ * props interface
+ * @param  {Class} intf interface class
+ */
+export function props (props) {
+  return (target) => {
+    target[CONFIG_KEY] = {...target[CONFIG_KEY], ...props}
+  }
+}
+
+/**
  * impl interface
  * @param  {Class} intf interface class
  */
 export function impl (intf) {
   return (target) => {
+    target[CONFIG_KEY] = {...target[CONFIG_KEY], ...refer(intf, true)}
     target.prototype[CONFIG_KEY] = refer(intf)
   }
 }
@@ -79,27 +90,28 @@ function annotateMethodFactory (fn, args) {
   return annotateion
 }
 
-/**
- * annotate class
- * @param  {Function} fn callback
- */
-export function annotateClass (fn) {
-  return (...args) => {
-    if (args.length === 1 && args[0]) {
-      let target = args[0]
-      if (typeof target === 'function') {
-        annotateClassFactory(fn)(...args)
-        return
-      }
-    }
-    return annotateClassFactory(fn, args)
-  }
-}
+// not used
+// /**
+//  * annotate class
+//  * @param  {Function} fn callback
+//  */
+// export function annotateClass (fn) {
+//   return (...args) => {
+//     if (args.length === 1 && args[0]) {
+//       let target = args[0]
+//       if (typeof target === 'function') {
+//         annotateClassFactory(fn)(...args)
+//         return
+//       }
+//     }
+//     return annotateClassFactory(fn, args)
+//   }
+// }
 
-function annotateClassFactory (fn, args) {
-  let annotateion = (target) => {
-    let it = target[CONFIG_KEY] || (target[CONFIG_KEY] = {})
-    fn(target, it, args || [])
-  }
-  return annotateion
-}
+// function annotateClassFactory (fn, args) {
+//   let annotateion = (target) => {
+//     let it = target[CONFIG_KEY] || (target[CONFIG_KEY] = {})
+//     fn(target, it, args || [])
+//   }
+//   return annotateion
+// }

@@ -39,7 +39,6 @@
     "nyc": "^10.0.0",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.7.1",
-    "sav-util": "0.0.9",
     "standard": "^8.5.0",
     "watch-cli": "^0.2.1"
   },

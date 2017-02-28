@@ -1,18 +1,16 @@
 import test from 'ava'
-import {isFunction} from 'sav-util'
 import {expect} from 'chai'
 
-import {conf, refer, quickConf, impl, annotateMethod, annotateClass, gen, generator} from '../src'
+import {conf, refer, quickConf, impl, annotateMethod, gen, generator, props} from '../src'
 
 test('api', (ava) => {
-  ava.true(isFunction(conf))
-  ava.true(isFunction(refer))
-  ava.true(isFunction(quickConf))
-  ava.true(isFunction(impl))
-  ava.true(isFunction(annotateMethod))
-  ava.true(isFunction(annotateClass))
-  ava.true(isFunction(gen))
-  ava.true(isFunction(generator))
+  expect(conf).to.be.a('function')
+  expect(refer).to.be.a('function')
+  expect(quickConf).to.be.a('function')
+  expect(impl).to.be.a('function')
+  expect(annotateMethod).to.be.a('function')
+  expect(gen).to.be.a('function')
+  expect(generator).to.be.a('function')
 })
 
 test('conf', (ava) => {
@@ -100,4 +98,39 @@ test('interface+impl', (ava) => {
       }
     }
   })
+})
+
+test('props', (ava) => {
+  @gen
+  @props({
+    a: 'a1'
+  })
+  class Test {
+    say () {}
+  }
+  expect(Test.options).to.eql({ a: 'a1' })
+})
+
+test('props + impl', (ava) => {
+  @props({
+    a: 'a1',
+    b: 'b1'
+  })
+  class UserInterface {
+    say () {}
+  }
+
+  @gen()
+  @props({
+    a: 'a2',
+    c: 'c1'
+  })
+  @impl(UserInterface)
+  @props({
+    b: 'b2',
+    d: 'd1'
+  })
+  class User {}
+
+  expect(User.options).to.eql({d: 'd1', b: 'b1', a: 'a2', c: 'c1'})
 })
