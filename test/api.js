@@ -51,7 +51,7 @@ test('multi gen', (ava) => {
     @prop
     say () {}
   }
-  expect(Test.actions.say.options).to.deep.equal([['prop'], ['prop']])
+  expect(Test.actions.say.middleware).to.deep.equal([['prop'], ['prop']])
 })
 
 test('interface+impl', (ava) => {
@@ -66,12 +66,12 @@ test('interface+impl', (ava) => {
   }
   expect(generator({auth: true})(Test)).to.deep.equal({
     name: 'Test',
-    options: {auth: true},
+    props: {auth: true},
     actions: {
       test: {
         name: 'test',
-        action: Test.prototype.test,
-        options: [
+        method: Test.prototype.test,
+        middleware: [
           ['hello', 'world']
         ]
       }
@@ -87,12 +87,12 @@ test('interface+impl', (ava) => {
 
   expect(Test2).to.deep.equal({
     name: 'Test2',
-    options: {},
+    props: {},
     actions: {
       test: {
         name: 'test',
-        action: undefined,
-        options: [
+        method: undefined,
+        middleware: [
           ['hello', 'world']
         ]
       }
@@ -108,7 +108,7 @@ test('props', (ava) => {
   class Test {
     say () {}
   }
-  expect(Test.options).to.eql({ a: 'a1' })
+  expect(Test.props).to.eql({ a: 'a1' })
 })
 
 test('props + impl', (ava) => {
@@ -132,5 +132,5 @@ test('props + impl', (ava) => {
   })
   class User {}
 
-  expect(User.options).to.eql({d: 'd1', b: 'b1', a: 'a2', c: 'c1'})
+  expect(User.props).to.eql({d: 'd1', b: 'b1', a: 'a2', c: 'c1'})
 })

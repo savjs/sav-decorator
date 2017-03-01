@@ -44,19 +44,19 @@ export {gen as generator}
 function transform (opts) {
   return (target) => {
     let configs = refer(target)
-    let options = refer(target, true)
-    options = {...options, ...opts}
+    let props = refer(target, true)
+    props = {...props, ...opts}
     let actions = {}
     for (let name in configs) {
       actions[name] = { // action
         name,
-        action: target.prototype[name],
-        options: configs[name]
+        method: target.prototype[name],
+        middleware: configs[name]
       }
     }
     let ret = { // module
       name: target.name,
-      options,
+      props,
       actions
     }
     return ret
