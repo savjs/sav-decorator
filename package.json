@@ -1,6 +1,6 @@
 {
   "name": "sav-decorator",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Interface generator with ES7 decorator",
   "main": "dist/sav-decorator.cjs.js",
   "module": "dist/sav-decorator.es.js",

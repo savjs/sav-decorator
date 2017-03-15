@@ -1,2 +1,1 @@
-export * from './conf'
-export * from './generator'
+export * from './decorator'
